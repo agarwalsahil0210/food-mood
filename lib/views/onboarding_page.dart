@@ -9,6 +9,7 @@ class OnboardingPage extends StatelessWidget {
   final _controller = OnboardingController();
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -23,7 +24,9 @@ class OnboardingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                          _controller.onboardingPages[index].imageAsset),
+                        _controller.onboardingPages[index].imageAsset,
+                        height: size.height * 0.5,
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -47,8 +50,8 @@ class OnboardingPage extends StatelessWidget {
                   ));
                 }),
             Positioned(
-                bottom: 20,
-                left: 20,
+                bottom: size.height * 0.1,
+                left: size.width * 0.5 - 23,
                 child: Row(
                   children: List.generate(
                     _controller.onboardingPages.length,
@@ -59,7 +62,7 @@ class OnboardingPage extends StatelessWidget {
                         height: 10,
                         decoration: BoxDecoration(
                           color: _controller.selectedPageIndex.value == index
-                              ? Colors.blue
+                              ? Colors.black
                               : Colors.grey,
                           borderRadius: BorderRadius.circular(5),
                         ),
@@ -68,11 +71,17 @@ class OnboardingPage extends StatelessWidget {
                   ),
                 )),
             Positioned(
-                bottom: 20,
-                right: 20,
-                child: FloatingActionButton(
+                bottom: 10,
+                left: size.width * 0.1,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                        fixedSize: Size(size.width * 0.8, 40),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
                     child: Obx(() {
-                      return Text(_controller.isLastPage ? "Start" : "Next");
+                      return Text(_controller.isLastPage ? "Start" : "Next",
+                          style: TextStyle(color: Colors.white, fontSize: 18));
                     }),
                     onPressed: _controller.forwardAction)),
           ],
